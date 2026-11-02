@@ -2267,7 +2267,7 @@ a.no-theme-style {
 
 					    var steps = $$('[data-hl-step]', form);
 					    var fill = $('.hl-lf-progress__fill', root);
-					    var stepLabel = $('[data-hl-step-label]', root);
+					    var stepLabel = root.closest('.hl-lf-card').querySelector('[data-hl-step-label]');
 					    var success = $('.hl-lf-success', root);
 					    var alertBox = $('[data-hl-alert]', root);
 					    var submitButton = $('[data-hl-submit]', root);

@@ -1023,7 +1023,7 @@ a.no-theme-style {
 								<p class="hl-lf-subtitle">Présentez-nous vos objectifs.</p>
 								<div class="hl-lf-progress">
 									<span class="hl-lf-progress__bar" aria-hidden="true"><span class="hl-lf-progress__fill"></span></span>
-									<span class="hl-lf-progress__label" data-hl-step-label role="status" aria-live="polite">Étape 1 sur 2</span>
+									<span class="hl-lf-progress__label" data-hl-step-label role="status" aria-live="polite">Étape 1 sur 3</span>
 								</div>
 							</div>
 							<form class="hl-lf-form" novalidate>
@@ -1054,32 +1054,6 @@ a.no-theme-style {
 									<button type="button" class="hl-lf-btn" data-hl-next>Suivant</button>
 								</div>
 								<div class="hl-lf-step" data-hl-step="2" hidden>
-									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-nom-energies">Nom et prénom (obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-nom-energies" name="nom" type="text" autocomplete="name" placeholder="Nom et Prénom*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer votre nom et prénom.</p>
-									</div>
-
-									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-mail-energies">E-mail (obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-mail-energies" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="E-mail*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer une adresse e-mail valide.</p>
-									</div>
-									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-tel-energies">Téléphone (obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-tel-energies" name="telephone" type="tel" inputmode="tel" autocomplete="tel" spellcheck="false" placeholder="Téléphone*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un numéro de téléphone valide.</p>
-									</div>
-									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-cp-energies">Code postal (obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-cp-energies" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="Code postal*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un code postal à 5 chiffres.</p>
-									</div>
-									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-ste-energies">Société (obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-ste-energies" name="societe" type="text" autocomplete="organization" placeholder="Société*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer le nom de votre société.</p>
-									</div>
 									<fieldset class="hl-lf-checks">
 										<legend class="hl-lf-legend">Votre besoin :</legend>
 									<label class="hl-lf-check">
@@ -1111,15 +1085,46 @@ a.no-theme-style {
 										<span>Autres besoins énergies B2C</span>
 									</label>
 									</fieldset>
+									<p class="hl-lf-error" id="hl-lf-besoins-error" role="alert" hidden>Merci de sélectionner au moins un besoin.</p>
+									<button type="button" class="hl-lf-btn" data-hl-next>Suivant</button>
+									<button type="button" class="hl-lf-back" data-hl-back><span aria-hidden="true">←</span> Retour</button>
+								</div>
+								<div class="hl-lf-step" data-hl-step="3" hidden>
+									<div class="hl-lf-field">
+										<label class="hl-lf-sr-only" for="hl-lf-nom-energies">Nom et prénom (obligatoire)</label>
+										<input class="hl-lf-input" id="hl-lf-nom-energies" name="nom" type="text" autocomplete="name" placeholder="Nom et Prénom*" aria-required="true">
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer votre nom et prénom.</p>
+									</div>
+
+									<div class="hl-lf-field">
+										<label class="hl-lf-sr-only" for="hl-lf-mail-energies">E-mail (obligatoire)</label>
+										<input class="hl-lf-input" id="hl-lf-mail-energies" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="E-mail*" aria-required="true">
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer une adresse e-mail valide.</p>
+									</div>
+									<div class="hl-lf-field">
+										<label class="hl-lf-sr-only" for="hl-lf-tel-energies">Téléphone (obligatoire)</label>
+										<input class="hl-lf-input" id="hl-lf-tel-energies" name="telephone" type="tel" inputmode="tel" autocomplete="tel" spellcheck="false" placeholder="Téléphone*" aria-required="true">
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un numéro de téléphone valide.</p>
+									</div>
+									<div class="hl-lf-field">
+										<label class="hl-lf-sr-only" for="hl-lf-cp-energies">Code postal (obligatoire)</label>
+										<input class="hl-lf-input" id="hl-lf-cp-energies" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="Code postal*" aria-required="true">
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un code postal à 5 chiffres.</p>
+									</div>
+									<div class="hl-lf-field">
+										<label class="hl-lf-sr-only" for="hl-lf-ste-energies">Société (obligatoire)</label>
+										<input class="hl-lf-input" id="hl-lf-ste-energies" name="societe" type="text" autocomplete="organization" placeholder="Société*" aria-required="true">
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer le nom de votre société.</p>
+									</div>
 									<div class="hl-lf-field">
 										<label class="hl-lf-label" for="hl-lf-volume2-energies">Volume de leads souhaité / mois :</label>
 										<div class="hl-lf-native">
 											<select class="hl-lf-select2" id="hl-lf-volume2-energies" name="volume_souhaite" aria-required="true">
 												<option value="">Sélectionnez...</option>
-									<option value="Moins de 100">Moins de 100</option>
-									<option value="100 à 500">100 à 500</option>
-									<option value="500 à 1000">500 à 1000</option>
-									<option value="Plus de 1000">Plus de 1000</option>
+												<option value="Moins de 100">Moins de 100</option>
+												<option value="100 à 500">100 à 500</option>
+												<option value="500 à 1000">500 à 1000</option>
+												<option value="Plus de 1000">Plus de 1000</option>
 											</select>
 											<svg class="hl-lf-native__chevron" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 										</div>
@@ -2427,6 +2432,22 @@ a.no-theme-style {
 					    }
 
 					    function validateStep2() {
+					      var besoins = form.elements['besoins'];
+					      var checked = false;
+					      if (besoins) {
+					        for (var i = 0; i < besoins.length; i++) {
+					          if (besoins[i].checked) {
+					            checked = true;
+					            break;
+					          }
+					        }
+					      }
+					      var errorEl = $('#hl-lf-besoins-error', root);
+					      if (errorEl) { errorEl.hidden = checked; }
+					      return checked;
+					    }
+
+					    function validateStep3() {
 					      var firstInvalid = null;
 					      rules.forEach(function (rule) {
 					        if (!rule.el) { return; }
@@ -2666,11 +2687,15 @@ a.no-theme-style {
 					        showStep(0);
 					        return;
 					      }
+					      if (!validateStep2()) {
+					        showStep(1);
+					        return;
+					      }
 					      if (current !== steps.length - 1) {
 					        showStep(steps.length - 1);
 					        return;
 					      }
-					      if (!validateStep2()) { return; }
+					      if (!validateStep3()) { return; }
 
 					      var data = collect();
 
@@ -2782,7 +2807,14 @@ a.no-theme-style {
 
 					    $$('[data-hl-next]', root).forEach(function (button) {
 					      button.addEventListener('click', function () {
-					        if (!validateStep1()) { return; }
+					        var stepIndex = parseInt(button.closest('[data-hl-step]').getAttribute('data-hl-step'));
+					        var isValid = false;
+					        if (stepIndex === 0) {
+					          isValid = validateStep1();
+					        } else if (stepIndex === 1) {
+					          isValid = validateStep2();
+					        }
+					        if (!isValid) { return; }
 					        hideAlert();
 					        showStep(current + 1);
 					      });

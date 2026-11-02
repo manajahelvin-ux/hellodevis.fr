@@ -2803,11 +2803,10 @@ a.no-theme-style {
 
 					    $$('[data-hl-next]', root).forEach(function (button) {
 					      button.addEventListener('click', function () {
-					        var stepIndex = parseInt(button.closest('[data-hl-step]').getAttribute('data-hl-step'));
 					        var isValid = false;
-					        if (stepIndex === 0) {
+					        if (current === 0) {
 					          isValid = validateStep1();
-					        } else if (stepIndex === 1) {
+					        } else if (current === 1) {
 					          isValid = validateStep2();
 					        }
 					        if (!isValid) { return; }

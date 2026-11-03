@@ -2432,16 +2432,8 @@ a.no-theme-style {
 					    }
 
 					    function validateStep2() {
-					      var besoins = form.elements['besoins'];
-					      var checked = false;
-					      if (besoins) {
-					        for (var i = 0; i < besoins.length; i++) {
-					          if (besoins[i].checked) {
-					            checked = true;
-					            break;
-					          }
-					        }
-					      }
+					      var checkedBoxes = form.querySelectorAll('input[name="besoins"]:checked');
+					      var checked = checkedBoxes.length > 0;
 					      var errorEl = $('#hl-lf-besoins-error', root);
 					      if (errorEl) { errorEl.hidden = checked; }
 					      return checked;

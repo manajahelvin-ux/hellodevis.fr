@@ -2266,7 +2266,7 @@ a.no-theme-style {
 					    if (!root || root.dataset.hlReady === 'true') { return; }
 					    root.dataset.hlReady = 'true';
 
-					    var form = $('.hl-lf-form', root);
+					    var form = root;
 					    if (!form) { return; }
 
 					    var steps = $$('[data-hl-step]', form);

@@ -2300,8 +2300,8 @@ a.no-theme-style {
 					      {
 					        name: 'nom',
 					        el: fullname,
-					        test: function () { return fullname.value.trim().length >= 2 && /\s/.test(fullname.value.trim()); },
-					        message: 'Merci d’indiquer votre nom et prénom.'
+					        test: function () { return fullname.value.trim().length >= 2; },
+					        message: 'Merci d’indiquer votre nom.'
 					      },
 					      {
 					        name: 'email',

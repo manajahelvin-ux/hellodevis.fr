@@ -1091,9 +1091,9 @@ a.no-theme-style {
 								</div>
 								<div class="hl-lf-step" data-hl-step="3" hidden>
 									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-nom-energies">Nom et prénom (obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-nom-energies" name="nom" type="text" autocomplete="name" placeholder="Nom et Prénom*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer votre nom et prénom.</p>
+										<label class="hl-lf-sr-only" for="hl-lf-nom-energies">Nom (obligatoire)</label>
+										<input class="hl-lf-input" id="hl-lf-nom-energies" name="nom" type="text" autocomplete="name" placeholder="Nom*" aria-required="true">
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer votre nom.</p>
 									</div>
 
 									<div class="hl-lf-field">
@@ -1539,7 +1539,7 @@ a.no-theme-style {
 					  function recapRows(data, options) {
 					    var opts = options || {};
 					    var rows = [
-					      ['Nom et prénom', data.nom],
+					      ['Nom', data.nom],
 					      ['Société', data.societe],
 					      ['E-mail', data.email],
 					      ['Téléphone', data.telephone],

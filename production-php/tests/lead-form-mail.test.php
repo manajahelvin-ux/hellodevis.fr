@@ -277,12 +277,15 @@ ok(strpos($safe, 'Simple') === 0, 'Valeur d’en-tête conservée');
  * ================================================================== */
 
 section('3. Téléphone');
-ok(hl_lf_is_valid_phone('06 12 34 56 78'), 'Numéro français avec espaces accepté');
-ok(hl_lf_is_valid_phone('+33 6 12 34 56 78'), 'Numéro +33 accepté');
-ok(hl_lf_is_valid_phone('0033612345678'), 'Préfixe 0033 accepté');
-ok(!hl_lf_is_valid_phone('06 12 34'), 'Numéro trop court refusé');
+ok(hl_lf_is_valid_phone('0612345678'), 'Numéro à 10 chiffres accepté');
+ok(hl_lf_is_valid_phone('06 12 34 56 78'), 'Numéro à 10 chiffres avec espaces accepté');
+ok(!hl_lf_is_valid_phone('+33 6 12 34 56 78'), 'Préfixe international refusé');
+ok(!hl_lf_is_valid_phone('0033612345678'), 'Numéro trop long refusé');
+ok(!hl_lf_is_valid_phone('061234567'), 'Numéro à 9 chiffres refusé');
+ok(!hl_lf_is_valid_phone('06123456789'), 'Numéro à 11 chiffres refusé');
 ok(!hl_lf_is_valid_phone('abcdefghij'), 'Numéro non numérique refusé');
-same('06 12 34 56 78', hl_lf_format_phone('+33612345678'), 'Formatage FR depuis +33');
+ok(!hl_lf_is_valid_phone('0612345678x'), 'Lettres dans le numéro refusées');
+same('06 12 34 56 78', hl_lf_format_phone('0612345678'), 'Formatage FR conservé');
 
 /* =====================================================================
  * 4. Validation des données
@@ -292,6 +295,11 @@ section('4. Validation');
 $valid = hl_lf_validate(payload(), $form);
 same(array(), $valid['errors'], 'Soumission valide : aucune erreur');
 same('100 à 500', $valid['data']['volume'], 'Volume conservé');
+foreach (array('061234567', '06123456789', '+33612345678', '0612345678x', '0612345678' . str_repeat(' ', 30) . '9') as $invalidPhone) {
+    $phoneResult = hl_lf_validate(payload(array('telephone' => $invalidPhone)), $form);
+    ok(isset($phoneResult['errors']['telephone']), 'Validation du numéro incorrect : ' . $invalidPhone);
+}
+
 
 $invalid = hl_lf_validate(payload(array(
     'nom'        => '',

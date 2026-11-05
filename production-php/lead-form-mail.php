@@ -979,17 +979,15 @@ function hl_lf_build_messages(array $data, array $meta, array $form, array $conf
     $contactEmail = !empty($contact['email']) ? $contact['email'] : $fromEmail;
     $contactName = !empty($contact['name']) ? $contact['name'] : $fromName;
 
-    $firstName = $data['nom'];
-    if (preg_match('/^(\S+)/u', $data['nom'], $m)) {
-        $firstName = $m[1];
-    }
-
+    // Le canal RCS ne change pas le libellé affiché au prospect.
+    $clientLabel = preg_replace('/\s*\(RCS\)$/i', '', $form['label']);
+    $publicContactEmail = 'contact@hellolead.pro';
     $clientSubject = 'Votre demande a bien été reçue — HelloLead';
-    $clientIntro = 'Bonjour ' . $firstName . ', nous avons bien reçu votre demande : une équipe s’en charge.';
+    $clientIntro = 'Bonjour, nous avons bien reçu votre demande.';
 
     $clientContent = '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#2f3033;">'
-        . 'Merci de votre confiance. Votre demande de leads <strong>' . hl_lf_e($form['label']) . '</strong> a bien été enregistrée '
-        . 'et a été transmise à notre équipe commerciale, qui en prend le suivi.'
+        . 'Merci de votre confiance. Votre demande de leads <strong>' . hl_lf_e($clientLabel) . '</strong> a bien été enregistrée '
+        . 'et a été transmise à notre équipe commerciale.'
         . '</p>'
         . '<p style="margin:0 0 18px;font-size:14.5px;line-height:1.6;color:#2f3033;">'
         . 'Un expert HelloLead revient vers vous pour préciser votre besoin et vous proposer un plan de leads adapté. '
@@ -999,20 +997,19 @@ function hl_lf_build_messages(array $data, array $meta, array $form, array $conf
         . $clientRecapHtml
         . '<p style="margin:18px 0 0;font-size:13.5px;line-height:1.6;color:#4b5563;">'
         . 'Une question ? Répondez simplement à cet e-mail'
-        . ($contactEmail !== '' ? ' ou écrivez-nous à <a href="mailto:' . hl_lf_e($contactEmail) . '" style="color:#eb5846;text-decoration:none;">' . hl_lf_e($contactEmail) . '</a>' : '')
+        . ' ou écrivez-nous à <a href="mailto:' . hl_lf_e($publicContactEmail) . '" style="color:#eb5846;text-decoration:none;">' . hl_lf_e($publicContactEmail) . '</a>'
         . '.</p>';
 
-    $clientText = 'Bonjour ' . $firstName . ",\n\n"
-        . "Nous avons bien reçu votre demande : une équipe s'en charge.\n\n"
-        . "Merci de votre confiance. Votre demande de leads " . $form['label'] . " a bien été enregistrée\n"
-        . "et a été transmise à notre équipe commerciale, qui en prend le suivi.\n\n"
+    $clientText = "Bonjour, nous avons bien reçu votre demande.\n\n"
+        . "Merci de votre confiance. Votre demande de leads " . $clientLabel . " a bien été enregistrée "
+        . "et a été transmise à notre équipe commerciale.\n\n"
         . "Un expert HelloLead revient vers vous pour préciser votre besoin et vous proposer\n"
         . "un plan de leads adapté. Aucune action n'est nécessaire de votre part pour le moment.\n\n"
         . "Récapitulatif de votre demande\n"
         . "-----------------------------\n"
         . $clientRecapText . "\n\n"
         . "Une question ? Répondez simplement à cet e-mail"
-        . ($contactEmail !== '' ? " ou écrivez-nous à " . $contactEmail : '') . ".\n\n"
+        . " ou écrivez-nous à " . $publicContactEmail . ".\n\n"
         . "--\n"
         . $contactName . "\n"
         . $config['site_url'] . "\n";

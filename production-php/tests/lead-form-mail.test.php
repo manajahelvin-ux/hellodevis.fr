@@ -336,8 +336,19 @@ same(array('marie.dupont@acme.fr'), $messages['client']['to'], 'Confirmation : d
 same('contact@hellolead.fr', $messages['client']['reply_to']['email'], 'Confirmation : Reply-To = contact');
 ok(strpos($messages['internal']['subject'], 'ACME Assurances') !== false, 'Objet interne mentionne la société');
 ok(strpos($messages['client']['text'], 'a bien été enregistrée') !== false, 'Confirmation : texte d’accusé de réception');
-ok(strpos($messages['client']['text'], 's\'en charge') !== false, 'Confirmation : mention « une équipe s’en charge »');
-ok(strpos($messages['client']['html'], 'Bonjour Marie') !== false, 'Confirmation : personnalisée avec le prénom');
+ok(strpos($messages['client']['html'], 'Bonjour, nous avons bien reçu votre demande.') !== false, 'Confirmation HTML : salutation demandée');
+ok(strpos($messages['client']['text'], "Bonjour, nous avons bien reçu votre demande.\n\n") === 0, 'Confirmation texte : salutation demandée');
+ok(strpos($messages['client']['html'], 'mailto:contact@hellolead.pro') !== false, 'Confirmation HTML : adresse de contact demandée');
+ok(strpos($messages['client']['text'], 'écrivez-nous à contact@hellolead.pro') !== false, 'Confirmation texte : adresse de contact demandée');
+foreach (array('Assurances pro', 'Assurances pro (RCS)', 'Énergies pro', 'Énergies pro (RCS)') as $label) {
+    $testForm = $formAssurances;
+    $testForm['label'] = $label;
+    $client = hl_lf_build_messages($data, $meta, $testForm, $config)['client'];
+    $clientLabel = str_replace(' (RCS)', '', $label);
+    $expected = 'Merci de votre confiance. Votre demande de leads ' . $clientLabel . ' a bien été enregistrée et a été transmise à notre équipe commerciale.';
+    ok(strpos($client['text'], $expected) !== false, 'Confirmation texte adaptée : ' . $label);
+    ok(strpos($client['html'], '<strong>' . $clientLabel . '</strong> a bien été enregistrée et a été transmise à notre équipe commerciale.') !== false, 'Confirmation HTML adaptée : ' . $label);
+}
 ok(strpos($messages['client']['text'], '24 h') === false, 'Confirmation : aucun délai promis');
 
 /* =====================================================================

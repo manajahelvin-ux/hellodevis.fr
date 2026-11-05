@@ -1055,7 +1055,7 @@ a.no-theme-style {
 								</div>
 								<div class="hl-lf-step" data-hl-step="2" hidden>
 									<fieldset class="hl-lf-checks">
-										<legend class="hl-lf-legend">Votre besoin :</legend>
+										<legend class="hl-lf-legend">Quels Leads souhaiteriez vous recevoir ?</legend>
 									<label class="hl-lf-check">
 										<input type="checkbox" name="besoins" value="Fourniture d'électricité" id="hl-lf-need-energies-rcs-1">
 										<span>Fourniture d'électricité</span>
@@ -1134,12 +1134,6 @@ a.no-theme-style {
 									<button type="submit" class="hl-lf-btn" data-hl-submit>Envoyer ma demande</button>
 									<p class="hl-lf-consent">En envoyant ce formulaire, vous acceptez d’être recontacté par nos équipes. Vos données sont traitées conformément à notre <a href="/politique-de-confidentialite-donnees-personnelles/" target="_blank" rel="noopener">politique de confidentialité</a>.</p>
 									<button type="button" class="hl-lf-back" data-hl-back><span aria-hidden="true">←</span> Retour</button>
-								</div>
-								<div class="hl-lf-success" hidden>
-									<div class="hl-lf-success__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-									<p class="hl-lf-success__title" role="status">Merci, votre demande est enregistrée</p>
-									<p class="hl-lf-success__text">Un expert HelloLead vous recontacte rapidement pour construire votre plan de leads personnalisé.</p>
-									<p class="hl-lf-success__email" data-hl-success-email hidden></p>
 								</div>
 							</form>
 						</div>
@@ -1595,10 +1589,9 @@ a.no-theme-style {
 					    var contact = CONTACT_EMAIL;
 					    var clientHtml = emailShell(
 					      'Votre demande a bien été reçue',
-					      'Bonjour ' + esc(firstNameOf(data.nom)) + ', nous avons bien reçu votre demande : une équipe s’en charge.',
+					      'Bonjour, nous avons bien reçu votre demande.',
 					      '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.6;color:#2f3033;">'
-					        + 'Merci de votre confiance. Votre demande de leads <strong>' + esc(label) + '</strong> a bien été enregistrée '
-					        + 'et a été transmise à notre équipe commerciale, qui en prend le suivi.</p>'
+					        + 'Merci de votre confiance. Votre demande de leads Énergies pro a bien été enregistrée et a été transmise à notre équipe commerciale.</p>'
 					        + '<p style="margin:0 0 18px;font-size:14.5px;line-height:1.6;color:#2f3033;">'
 					        + 'Un expert HelloLead revient vers vous pour préciser votre besoin et vous proposer un plan de leads adapté. '
 					        + 'Aucune action n’est nécessaire de votre part pour le moment.</p>'
@@ -1606,10 +1599,7 @@ a.no-theme-style {
 					        + 'Récapitulatif de votre demande</div>'
 					        + recapHtml(recapRows(data, { client: true }))
 					        + '<p style="margin:18px 0 0;font-size:13.5px;line-height:1.6;color:#4b5563;">'
-					        + 'Une question ? Répondez simplement à cet e-mail'
-					        + (contact ? ' ou écrivez-nous à <a href="mailto:' + esc(contact) + '" style="color:#eb5846;text-decoration:none;">'
-					          + esc(contact) + '</a>' : '')
-					        + '.</p>',
+					        + 'Une question ? Répondez simplement à cet e-mail ou écrivez-nous à <a href="mailto:contact@hellolead.pro" style="color:#eb5846;text-decoration:none;">contact@hellolead.pro</a>.</p>','
 					      'Vous recevez cet e-mail car vous avez envoyé une demande depuis ' + esc(SITE_URL || 'notre site') + '.<br>'
 					        + 'Vos données sont traitées conformément à notre <a href="' + esc(SITE_URL)
 					        + '/politique-de-confidentialite-donnees-personnelles/" style="color:#eb5846;text-decoration:none;">'
@@ -1617,16 +1607,14 @@ a.no-theme-style {
 					    );
 
 					    var clientText = 'Bonjour ' + firstNameOf(data.nom) + ',\n\n'
-					      + 'Nous avons bien reçu votre demande : une équipe s’en charge.\n\n'
-					      + 'Merci de votre confiance. Votre demande de leads ' + label + ' a bien été enregistrée\n'
-					      + 'et a été transmise à notre équipe commerciale, qui en prend le suivi.\n\n'
+					      + 'Bonjour, nous avons bien reçu votre demande.\n\n'
+					      + 'Merci de votre confiance. Votre demande de leads Énergies pro a bien été enregistrée et a été transmise à notre équipe commerciale.\n\n'
 					      + 'Un expert HelloLead revient vers vous pour préciser votre besoin et vous proposer\n'
 					      + 'un plan de leads adapté. Aucune action n’est nécessaire de votre part pour le moment.\n\n'
 					      + 'Récapitulatif de votre demande\n'
 					      + '-----------------------------\n'
 					      + recapText(recapRows(data, { client: true })) + '\n\n'
-					      + 'Une question ? Répondez simplement à cet e-mail'
-					      + (contact ? ' ou écrivez-nous à ' + contact : '') + '.\n\n'
+					      + 'Une question ? Répondez simplement à cet e-mail ou écrivez-nous à contact@hellolead.pro.\n\n'
 					      + '--\nHelloLead\n' + SITE_URL + '\n';
 
 					    return {

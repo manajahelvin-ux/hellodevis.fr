@@ -45,6 +45,9 @@ for (const name of forms) {
       const next = form.querySelectorAll('[data-hl-next]');
       const label = document.querySelector('[data-hl-step-label]');
       const fill = document.querySelector('.hl-lf-progress__fill');
+      const head = document.querySelector('.hl-lf-head');
+      assert.equal(head.hidden, false);
+      assert.equal(form.querySelector('.hl-lf-legend').textContent, 'Quels Leads souhaiteriez vous recevoir ?');
       assert.equal(form.dataset.hlReady, 'true');
       assert.equal(label.textContent, 'Étape 1 sur 3');
       assert.ok(Math.abs(parseFloat(fill.style.width) - 100 / 3) < 0.01);
@@ -77,6 +80,7 @@ for (const name of forms) {
       next[1].click();
       form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
       assert.equal(form.querySelector('[data-hl-alert]').hidden, false);
+      assert.equal(head.hidden, false);
       assert.equal(requests.length, 0);
       fillForm(document);
       const submitted = new Promise(resolve => document.addEventListener('hl:lead-form:submit', e => resolve(e.detail), { once: true }));
@@ -90,12 +94,41 @@ for (const name of forms) {
       const mail = requests.find(req => req.body.messages);
       const sheet = requests.find(req => req.body.lead);
       assert.equal(mail.body.messages.length, 3);
-      assert.match(mail.body.messages[2].html, /contact@hellolead\.pro<\/a>\.<\/p>/);
+      const client = mail.body.messages[2];
+      const sector = name.includes('assurances') ? 'Assurances pro' : 'Énergies pro';
+      const receipt = `Merci de votre confiance. Votre demande de leads ${sector} a bien été enregistrée et a été transmise à notre équipe commerciale.`;
+      assert.ok(client.html.includes('Bonjour, nous avons bien reçu votre demande.'));
+      assert.ok(client.html.includes(receipt));
+      assert.match(client.html, /contact@hellolead\.pro<\/a>\.<\/p>/);
+      assert.ok(client.text.startsWith('Bonjour, nous avons bien reçu votre demande.\n\n'));
+      assert.ok(client.text.includes(receipt));
+      assert.ok(client.text.includes('Une question ? Répondez simplement à cet e-mail ou écrivez-nous à contact@hellolead.pro.'));
+      assert.equal(client.reply_to, window.HL_LEAD_CONFIG.contactEmail);
       assert.equal(sheet.body.lead.volume, data.volume);
       assert.equal(form.querySelector('.hl-lf-success').hidden, false);
+      assert.equal(head.hidden, true);
       assert.match(form.querySelector('[data-hl-success-email]').textContent, /jean@example\.com/);
       assert.equal(label.textContent, 'Demande envoyée');
       assert.equal(fill.style.width, '100%');
+    } finally { dom.window.close(); }
+  });
+
+
+  test(`${name} : l'en-tête reste visible si l'envoi échoue`, async () => {
+    const { dom, window, document } = openPage(name, { ok: false, error: 'unknown' });
+    try {
+      const form = document.querySelector('.hl-lf-form');
+      form.querySelector('.hl-lf-select__trigger').click();
+      form.querySelector('[role="option"]').click();
+      form.querySelectorAll('[data-hl-next]')[0].click();
+      form.querySelector('input[name="besoins"]').click();
+      form.querySelectorAll('[data-hl-next]')[1].click();
+      fillForm(document);
+      form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+      await new Promise(resolve => setTimeout(resolve, 20));
+      assert.equal(document.querySelector('.hl-lf-head').hidden, false);
+      assert.equal(form.querySelector('.hl-lf-success').hidden, true);
+      assert.equal(form.querySelector('[data-hl-alert]').hidden, false);
     } finally { dom.window.close(); }
   });
 

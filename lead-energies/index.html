@@ -1473,11 +1473,6 @@ a.no-theme-style {
 					      + ' ' + pad2(date.getHours()) + ':' + pad2(date.getMinutes());
 					  }
 
-					  function firstNameOf(name) {
-					    var match = String(name || '').trim().match(/^(\S+)/);
-					    return match ? match[1] : String(name || '').trim();
-					  }
-
 					  /* ------------------------------------------------------------------
 					     Fabrication des e-mails
 					     Miroir des gabarits servis en production : mêmes libellés, même mise
@@ -1612,8 +1607,7 @@ a.no-theme-style {
 					        + 'politique de confidentialité</a>.'
 					    );
 
-					    var clientText = 'Bonjour ' + firstNameOf(data.nom) + ',\n\n'
-					      + 'Bonjour, nous avons bien reçu votre demande.\n\n'
+					    var clientText = 'Bonjour, nous avons bien reçu votre demande.\n\n'
 					      + 'Merci de votre confiance. Votre demande de leads Énergies pro a bien été enregistrée et a été transmise à notre équipe commerciale.\n\n'
 					      + 'Un expert HelloLead revient vers vous pour préciser votre besoin et vous proposer\n'
 					      + 'un plan de leads adapté. Aucune action n’est nécessaire de votre part pour le moment.\n\n'
@@ -2265,6 +2259,7 @@ a.no-theme-style {
 
 					    var steps = $$('[data-hl-step]', form);
 					    var container = root.closest('.hl-lead-form');
+					    var head = container ? $('.hl-lf-head', container) : null;
 					    var fill = container ? $('.hl-lf-progress__fill', container) : null;
 					    var stepLabel = root.closest('.hl-lf-card').querySelector('[data-hl-step-label]');
 					    var success = $('.hl-lf-success', root);
@@ -2533,6 +2528,7 @@ a.no-theme-style {
 					      var mode = meta.mode || 'remote';
 
 					      submitted = true;
+					      if (head) { head.hidden = true; }
 					      if (demoNote) { demoNote.hidden = true; }
 					      steps.forEach(function (step) { step.hidden = true; });
 					      if (success) { success.hidden = false; }

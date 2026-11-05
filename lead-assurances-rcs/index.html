@@ -1055,7 +1055,7 @@ a.no-theme-style {
 								</div>
 								<div class="hl-lf-step" data-hl-step="2" hidden>
 									<fieldset class="hl-lf-checks">
-										<legend class="hl-lf-legend">Quels Leads souhaiteriez vous recevoir ?</legend>
+										<legend class="hl-lf-legend">Quels Leads souhaiteriez-vous recevoir ?</legend>
 									<label class="hl-lf-check">
 										<input type="checkbox" name="besoins" value="Assurances professionnelles I.A.R.D" id="hl-lf-need-assurances-rcs-1">
 										<span>Assurances professionnelles I.A.R.D</span>
@@ -1098,9 +1098,9 @@ a.no-theme-style {
 										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer une adresse e-mail valide.</p>
 									</div>
 									<div class="hl-lf-field">
-										<label class="hl-lf-sr-only" for="hl-lf-tel-assurances-rcs">Téléphone (obligatoire)</label>
+										<label class="hl-lf-sr-only" for="hl-lf-tel-assurances-rcs">Téléphone (10 chiffres, obligatoire)</label>
 										<input class="hl-lf-input" id="hl-lf-tel-assurances-rcs" name="telephone" type="tel" inputmode="tel" autocomplete="tel" spellcheck="false" placeholder="Téléphone*" aria-required="true">
-										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un numéro de téléphone valide.</p>
+										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un numéro de téléphone à 10 chiffres.</p>
 									</div>
 									<div class="hl-lf-field">
 										<label class="hl-lf-sr-only" for="hl-lf-cp-assurances-rcs">Code postal (obligatoire)</label>
@@ -1242,13 +1242,7 @@ a.no-theme-style {
 
 					  function isValidPhone(raw) {
 					    var value = String(raw == null ? '' : raw).trim();
-					    if (value.length < 6) { return false; }
-					    var compact = value.replace(/[^\d+]/g, '');
-					    if (/^0[1-9]\d{8}$/.test(compact)) { return true; }
-					    var international = compact.replace(/^\+/, '').replace(/^00/, '');
-					    if (/^33[1-9]\d{8}$/.test(international)) { return true; }
-					    if ((/^\+/.test(compact) || /^00/.test(compact)) && /^[1-9]\d{7,14}$/.test(international)) { return true; }
-					    return false;
+					    return /^[0-9\s.()\-]+$/.test(value) && value.replace(/\D/g, '').length === 10;
 					  }
 
 					  function formatFrenchPhone(raw) {
@@ -2299,7 +2293,7 @@ a.no-theme-style {
 					        name: 'telephone',
 					        el: phone,
 					        test: function () { return isValidPhone(phone.value); },
-					        message: 'Merci d’indiquer un numéro de téléphone valide.'
+					        message: 'Merci d’indiquer un numéro de téléphone à 10 chiffres.'
 					      },
 					      {
 					        name: 'code_postal',
@@ -2766,7 +2760,6 @@ a.no-theme-style {
 					    if (phone) {
 					      phone.addEventListener('input', function () {
 					        var cleaned = phone.value.replace(/[^0-9+().\s-]/g, '');
-					        if (cleaned.length > 24) { cleaned = cleaned.slice(0, 24); }
 					        if (cleaned !== phone.value) { phone.value = cleaned; }
 					      });
 					      phone.addEventListener('blur', function () {

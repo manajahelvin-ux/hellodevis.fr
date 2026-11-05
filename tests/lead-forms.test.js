@@ -47,7 +47,7 @@ for (const name of forms) {
       const fill = document.querySelector('.hl-lf-progress__fill');
       const head = document.querySelector('.hl-lf-head');
       assert.equal(head.hidden, false);
-      assert.equal(form.querySelector('.hl-lf-legend').textContent, 'Quels Leads souhaiteriez vous recevoir ?');
+      assert.equal(form.querySelector('.hl-lf-legend').textContent, 'Quels Leads souhaiteriez-vous recevoir ?');
       assert.equal(form.dataset.hlReady, 'true');
       assert.equal(label.textContent, 'Étape 1 sur 3');
       assert.ok(Math.abs(parseFloat(fill.style.width) - 100 / 3) < 0.01);
@@ -129,6 +129,36 @@ for (const name of forms) {
       assert.equal(document.querySelector('.hl-lf-head').hidden, false);
       assert.equal(form.querySelector('.hl-lf-success').hidden, true);
       assert.equal(form.querySelector('[data-hl-alert]').hidden, false);
+    } finally { dom.window.close(); }
+  });
+
+
+  test(`${name} : téléphone de 10 chiffres requis`, () => {
+    const { dom, window, document, requests } = openPage(name);
+    try {
+      const form = document.querySelector('.hl-lf-form');
+      form.querySelector('.hl-lf-select__trigger').click();
+      form.querySelector('[role="option"]').click();
+      form.querySelectorAll('[data-hl-next]')[0].click();
+      form.querySelector('input[name="besoins"]').click();
+      form.querySelectorAll('[data-hl-next]')[1].click();
+      fillForm(document);
+      const phone = form.elements.telephone;
+      for (const value of ['061234567', '06123456789', '+33612345678', 'abcdefghij', '']) {
+        phone.value = value;
+        phone.dispatchEvent(new window.Event('input', { bubbles: true }));
+        form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+        assert.equal(phone.getAttribute('aria-invalid'), 'true', `numéro refusé : ${value}`);
+        assert.match(phone.closest('.hl-lf-field').querySelector('.hl-lf-error').textContent, /10 chiffres/);
+        assert.equal(requests.length, 0);
+      }
+      phone.value = '0612345678';
+      phone.dispatchEvent(new window.Event('input', { bubbles: true }));
+      phone.dispatchEvent(new window.Event('blur'));
+      assert.equal(phone.value, '06 12 34 56 78');
+      form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+      assert.equal(phone.getAttribute('aria-invalid'), 'false');
+      assert.equal(requests.length, 2);
     } finally { dom.window.close(); }
   });
 

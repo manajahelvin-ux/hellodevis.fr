@@ -633,26 +633,19 @@ function hl_lf_normalize_phone($value)
 }
 
 /**
- * Valide un numéro (France métropolitaine, DOM ou international E.164).
+ * Valide un numéro composé de 10 chiffres, avec séparateurs facultatifs.
  *
  * @param string $value
  * @return bool
  */
 function hl_lf_is_valid_phone($value)
 {
-    $value = hl_lf_normalize_phone($value);
-
-    if (preg_match('/^0[1-9]\d{8}$/', $value)) {
-        return true;
+    if (!is_string($value) && !is_numeric($value)) {
+        return false;
     }
-    if (preg_match('/^\+33[1-9]\d{8}$/', $value)) {
-        return true;
-    }
-    if (preg_match('/^\+[1-9]\d{7,14}$/', $value)) {
-        return true;
-    }
-
-    return false;
+    $value = trim((string) $value);
+    return (bool) preg_match('/^[0-9\s.()\-]+$/u', $value)
+        && strlen(preg_replace('/[^0-9]/', '', $value)) === 10;
 }
 
 /**
@@ -697,11 +690,12 @@ function hl_lf_validate(array $input, array $form)
         $errors['email'] = 'Merci d’indiquer une adresse e-mail valide.';
     }
 
-    $data['telephone'] = hl_lf_clean_text(isset($input['telephone']) ? $input['telephone'] : '', 30);
-    if (!hl_lf_is_valid_phone($data['telephone'])) {
-        $errors['telephone'] = 'Merci d’indiquer un numéro de téléphone valide.';
+    $rawPhone = isset($input['telephone']) ? $input['telephone'] : '';
+    $data['telephone'] = hl_lf_clean_text($rawPhone, 30);
+    if (!hl_lf_is_valid_phone($rawPhone)) {
+        $errors['telephone'] = 'Merci d’indiquer un numéro de téléphone à 10 chiffres.';
     } else {
-        $data['telephone'] = hl_lf_format_phone($data['telephone']);
+        $data['telephone'] = hl_lf_format_phone(preg_replace('/[^0-9]/', '', (string) $rawPhone));
     }
 
     $data['code_postal'] = preg_replace('/\s+/', '', hl_lf_clean_text(isset($input['code_postal']) ? $input['code_postal'] : '', 10));

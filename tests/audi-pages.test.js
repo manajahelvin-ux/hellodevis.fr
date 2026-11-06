@@ -5,6 +5,10 @@ const path = require('node:path');
 const { JSDOM, VirtualConsole } = require('jsdom');
 
 const pages = {
+  'audi-a1': 'formulaire-audi-a1',
+  'audi-a3': 'formulaire-audi-a3',
+  'audi-a3-2': 'formulaire-audi-a3',
+  'audi-q5': 'formulaire-audi-q5',
   'audi-q6': 'formulaire-audi-q6',
   'audi-q4': 'formulaire-audi-q4',
   'audi-a5': 'formulaire-audi-a5',

@@ -408,6 +408,135 @@ a.no-theme-style {
 
 
 	
+/* Audi — lisibilité et navigation sur mobile et tablette */
+.elementor-1711 .elementor-element-b6b8ed1 {
+  box-sizing: border-box;
+  width: calc(100% - 40px) !important;
+}
+#form_audi {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+}
+.audi-badge {
+  cursor: default;
+  user-select: none;
+}
+.audi-cta-container {
+  padding: 24px 40px;
+  background: #EEF2FF;
+  text-align: center;
+}
+.audi-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 220px;
+  min-height: 50px;
+  padding: 13px 24px;
+  border: 2px solid #111827;
+  border-radius: 10px;
+  background: #111827;
+  color: #ffffff !important;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none !important;
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
+  -webkit-tap-highlight-color: rgba(17, 24, 39, .15);
+}
+.audi-cta:hover {
+  background: #ffffff;
+  color: #111827 !important;
+  transform: translateY(-1px);
+}
+.audi-cta:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+.e-con,
+.e-con-inner,
+.elementor-widget,
+.elementor-widget-container {
+  min-width: 0;
+}
+.elementor-widget-text-editor p,
+.elementor-widget-text-editor {
+  overflow-wrap: break-word;
+}
+
+/* Tablettes : formulaire et présentation sur toute la largeur. */
+@media (max-width: 900px) {
+  .e-grid.e-parent {
+    --e-con-grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+  .e-grid.e-parent > .e-con-inner,
+  .e-grid.e-parent .e-child,
+  .e-grid.e-parent .e-con-full {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+  .e-grid.e-parent .mon-id,
+  .e-grid.e-parent .mon-id-2,
+  .e-grid.e-parent .mon-id-q4 {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .audi-cta-container {
+    padding: 24px 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .e-grid.e-parent > .e-con-inner {
+    padding: 0 !important;
+  }
+  .e-grid.e-parent .e-child {
+    border-radius: 0 !important;
+  }
+  .elementor-heading-title {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+  }
+  .audi-cta-container {
+    padding: 20px;
+  }
+  .audi-cta {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    font-size: 16px;
+  }
+  .audi-badge {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .audi-cta-container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audi-cta {
+    transition: none;
+  }
+  .audi-cta:hover {
+    transform: none;
+  }
+}
+
+
 </style>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head>
 <body class="wp-singular page-template page-template-elementor_canvas page page-id-1711 wp-embed-responsive wp-theme-hello-elementor eio-default hello-elementor-default elementor-default elementor-template-canvas elementor-kit-6 elementor-page elementor-page-1711">
@@ -427,7 +556,7 @@ a.no-theme-style {
 				<div class="elementor-element elementor-element-05662a0 elementor-widget elementor-widget-html" data-id="05662a0" data-element_type="widget" data-widget_type="html.default">
 				<div class="elementor-widget-container">
 					<div class="form-audi-a3">
-  <iframe src="https://www.ubepro.fr/formulaires-audi/formulaire-audi-a3?ltm_source=SMS&amp;ltm_category=223" frameborder="0" id="form_audi">
+  <iframe src="https://www.ubepro.fr/formulaires-audi/formulaire-audi-a3?ltm_source=SMS&amp;ltm_category=223" frameborder="0" id="form_audi" title="Formulaire de demande d’offre Audi">
   </iframe>      
 </div>
 
@@ -484,11 +613,11 @@ window.addEventListener("message", function(event) {
 				<div class="elementor-element elementor-element-0605442 elementor-widget elementor-widget-button" data-id="0605442" data-element_type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
-					<a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+					<span class="elementor-button elementor-button-link elementor-size-sm audi-badge">
 						<span class="elementor-button-content-wrapper">
 									<span class="elementor-button-text">Berline</span>
 					</span>
-					</a>
+					</span>
 				</div>
 								</div>
 				</div>
@@ -499,11 +628,11 @@ window.addEventListener("message", function(event) {
 				<div class="elementor-element elementor-element-e99abb4 elementor-widget elementor-widget-button" data-id="e99abb4" data-element_type="widget" data-widget_type="button.default">
 				<div class="elementor-widget-container">
 									<div class="elementor-button-wrapper">
-					<a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+					<span class="elementor-button elementor-button-link elementor-size-sm audi-badge">
 						<span class="elementor-button-content-wrapper">
 									<span class="elementor-button-text">E-Hybrid</span>
 					</span>
-					</a>
+					</span>
 				</div>
 								</div>
 				</div>
@@ -519,7 +648,8 @@ window.addEventListener("message", function(event) {
 				</div>
 					</div>
 				</div>
-		<div class="elementor-element elementor-element-59c7dce e-flex e-con-boxed e-con e-parent" data-id="59c7dce" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+		<div class="audi-cta-container"><a class="audi-cta" href="#form_audi">Obtenir mon offre Audi</a></div>
+<div class="elementor-element elementor-element-59c7dce e-flex e-con-boxed e-con e-parent" data-id="59c7dce" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
 					<div class="e-con-inner">
 				<div class="elementor-element elementor-element-d95c893 elementor-widget elementor-widget-text-editor" data-id="d95c893" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">

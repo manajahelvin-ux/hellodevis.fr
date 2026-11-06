@@ -1103,7 +1103,7 @@ a.no-theme-style {
 									</div>
 									<div class="hl-lf-field">
 										<label class="hl-lf-sr-only" for="hl-lf-tel-energies">Téléphone (10 chiffres, obligatoire)</label>
-										<input class="hl-lf-input" id="hl-lf-tel-energies" name="telephone" type="tel" inputmode="tel" autocomplete="tel" spellcheck="false" placeholder="Téléphone*" aria-required="true">
+										<input class="hl-lf-input" id="hl-lf-tel-energies" name="telephone" type="tel" inputmode="numeric" autocomplete="tel" spellcheck="false" maxlength="10" pattern="[0-9]{10}" placeholder="Téléphone*" aria-required="true">
 										<p class="hl-lf-error" role="alert" hidden>Merci d’indiquer un numéro de téléphone à 10 chiffres.</p>
 									</div>
 									<div class="hl-lf-field">
@@ -2763,8 +2763,8 @@ a.no-theme-style {
 
 					    if (phone) {
 					      phone.addEventListener('input', function () {
-					        var cleaned = phone.value.replace(/[^0-9+().\s-]/g, '');
-					        if (cleaned !== phone.value) { phone.value = cleaned; }
+					        var digits = phone.value.replace(/\D/g, '').slice(0, 10);
+					        if (digits !== phone.value) { phone.value = digits; }
 					      });
 					      phone.addEventListener('blur', function () {
 					        if (!phone.value.trim()) { return; }

@@ -144,7 +144,7 @@ for (const name of forms) {
       form.querySelectorAll('[data-hl-next]')[1].click();
       fillForm(document);
       const phone = form.elements.telephone;
-      for (const value of ['061234567', '06123456789', '+33612345678', 'abcdefghij', '']) {
+      for (const value of ['061234567', 'abcdefghij', '']) {
         phone.value = value;
         phone.dispatchEvent(new window.Event('input', { bubbles: true }));
         form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
@@ -152,6 +152,12 @@ for (const name of forms) {
         assert.match(phone.closest('.hl-lf-field').querySelector('.hl-lf-error').textContent, /10 chiffres/);
         assert.equal(requests.length, 0);
       }
+      phone.value = '06ab12 34 56 78 90 12';
+      phone.dispatchEvent(new window.Event('input', { bubbles: true }));
+      assert.equal(phone.value, '0612345678', 'les caractères non numériques sont supprimés et la saisie est limitée à 10 chiffres');
+      assert.equal(phone.maxLength, 10);
+      assert.equal(phone.inputMode, 'numeric');
+      assert.equal(phone.pattern, '[0-9]{10}');
       phone.value = '0612345678';
       phone.dispatchEvent(new window.Event('input', { bubbles: true }));
       phone.dispatchEvent(new window.Event('blur'));

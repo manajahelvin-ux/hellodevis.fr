@@ -48,6 +48,7 @@ for (const name of forms) {
       const head = document.querySelector('.hl-lf-head');
       assert.equal(head.hidden, false);
       assert.equal(form.querySelector('.hl-lf-legend').textContent, 'Quels Leads souhaiteriez-vous recevoir ?');
+      assert.equal(document.querySelector('.hl-lf-subtitle').textContent, 'Présentez-nous vos objectifs. On revient vers vous...');
       assert.equal(form.dataset.hlReady, 'true');
       assert.equal(label.textContent, 'Étape 1 sur 3');
       assert.ok(Math.abs(parseFloat(fill.style.width) - 100 / 3) < 0.01);
@@ -104,6 +105,21 @@ for (const name of forms) {
       assert.ok(client.text.includes(receipt));
       assert.ok(client.text.includes('Une question ? Répondez simplement à cet e-mail ou écrivez-nous à contact@hellolead.pro.'));
       assert.equal(client.reply_to, window.HL_LEAD_CONFIG.contactEmail);
+
+      // Notification interne : « leads » au pluriel, bloc d'action vert et SMS.
+      const internal = mail.body.messages[0];
+      assert.ok(internal.subject.startsWith('[Lead '));
+      assert.ok(internal.html.includes('>Nouvelle demande de leads</h1>'));
+      assert.ok(internal.html.includes('Nouvelle demande de leads : Exemple (Jean Martin)'));
+      assert.ok(!internal.html.includes('>Nouvelle demande de lead<'));
+      assert.ok(internal.html.includes('Recontacter ce prospect par téléphone, par e-mail ou par SMS.'));
+      assert.ok(!internal.html.includes('Répondez directement à cet e-mail pour lui écrire.'));
+      assert.ok(internal.html.includes('background:#f1f9f4;border:1px solid #bfe3cd;'));
+      assert.ok(internal.html.includes('color:#1e7a46;\">Action attendue</strong>'));
+      assert.ok(!internal.html.includes('#a3352a'));
+      assert.ok(internal.text.startsWith('NOUVELLE DEMANDE DE LEADS\n'));
+      assert.ok(internal.text.includes('Action attendue : recontacter ce prospect par téléphone, par e-mail ou par SMS.'));
+      assert.ok(!internal.text.includes('Répondez directement'));
       assert.equal(sheet.body.lead.volume, data.volume);
       assert.equal(form.querySelector('.hl-lf-success').hidden, false);
       assert.equal(head.hidden, true);
@@ -132,6 +148,28 @@ for (const name of forms) {
     } finally { dom.window.close(); }
   });
 
+
+  test(`${name} : le message de remerciement est ramené en haut de l'écran`, async () => {
+    const { dom, window, document } = openPage(name);
+    try {
+      const card = document.querySelector('.hl-lf-card');
+      const scrolls = [];
+      card.scrollIntoView = options => scrolls.push(options);
+      const form = document.querySelector('.hl-lf-form');
+      form.querySelector('.hl-lf-select__trigger').click();
+      form.querySelector('[role="option"]').click();
+      form.querySelectorAll('[data-hl-next]')[0].click();
+      form.querySelector('input[name="besoins"]').click();
+      form.querySelectorAll('[data-hl-next]')[1].click();
+      fillForm(document);
+      form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+      await new Promise(resolve => setTimeout(resolve, 20));
+      assert.equal(form.querySelector('.hl-lf-success').hidden, false);
+      assert.equal(scrolls.length, 1, 'le message de remerciement est ramené à l’écran une seule fois');
+      assert.equal(scrolls[0].behavior, 'smooth');
+      assert.equal(scrolls[0].block, 'start');
+    } finally { dom.window.close(); }
+  });
 
   test(`${name} : téléphone de 10 chiffres requis`, () => {
     const { dom, window, document, requests } = openPage(name);

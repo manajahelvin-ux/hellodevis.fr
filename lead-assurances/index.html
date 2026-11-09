@@ -541,6 +541,8 @@ a.no-theme-style {
 					  border-radius: 18px;
 					  padding: 28px 30px 26px;
 					  box-shadow: 0 12px 34px rgba(16, 24, 40, 0.07);
+					  /* Marge d'ancrage : le message de remerciement est ramené en haut de l'écran. */
+					  scroll-margin-top: 16px;
 					}
 
 					.hl-lead-form .hl-lf-head { margin: 0 0 20px; }
@@ -1020,7 +1022,7 @@ a.no-theme-style {
 						<div class="hl-lf-card">
 							<div class="hl-lf-head">
 								<h2 class="hl-lf-title">Parlons de votre projet</h2>
-								<p class="hl-lf-subtitle">Présentez-nous vos objectifs.</p>
+								<p class="hl-lf-subtitle">Présentez-nous vos objectifs. On revient vers vous...</p>
 								<div class="hl-lf-progress">
 									<span class="hl-lf-progress__bar" aria-hidden="true"><span class="hl-lf-progress__fill"></span></span>
 									<span class="hl-lf-progress__label" data-hl-step-label role="status" aria-live="polite">Étape 1 sur 3</span>
@@ -1558,23 +1560,22 @@ a.no-theme-style {
 
 					    /* 1. Notification interne */
 					    var internalHtml = emailShell(
-					      'Nouvelle demande de lead',
-					      'Nouvelle demande de lead : ' + esc(data.societe) + ' (' + esc(data.nom) + ') — ' + esc(data.volume) + ' leads/mois.',
+					      'Nouvelle demande de leads',
+					      'Nouvelle demande de leads : ' + esc(data.societe) + ' (' + esc(data.nom) + ') — ' + esc(data.volume) + ' leads/mois.',
 					      recapHtml(recapRows(data, { label: label }))
-					        + '<div style="margin-top:20px;padding:14px 16px;background:#fff7f5;border:1px solid #f6d5ce;border-radius:10px;'
-					        + 'font-size:13.5px;line-height:1.55;color:#7a2a20;">'
-					        + '<strong style="display:block;margin-bottom:6px;color:#a3352a;">Action attendue</strong>'
-					        + 'Recontacter ce prospect par téléphone ou par e-mail. Répondez directement à cet e-mail pour lui écrire.'
+					        + '<div style="margin-top:20px;padding:14px 16px;background:#f1f9f4;border:1px solid #bfe3cd;border-radius:10px;'
+					        + 'font-size:13.5px;line-height:1.55;color:#1d5c3a;">'
+					        + '<strong style="display:block;margin-bottom:6px;color:#1e7a46;">Action attendue</strong>'
+					        + 'Recontacter ce prospect par téléphone, par e-mail ou par SMS.'
 					        + '</div>',
 					      footerBase + '<br>Référence : ' + esc(data.lead_id || '—')
 					    );
 
-					    var internalText = 'NOUVELLE DEMANDE DE LEAD\n'
-					      + '========================\n\n'
+					    var internalText = 'NOUVELLE DEMANDE DE LEADS\n'
+					      + '=========================\n\n'
 					      + recapText(recapRows(data, { label: label })) + '\n\n'
 					      + 'Besoins : ' + needs + '\n'
-					      + 'Action attendue : recontacter ce prospect par téléphone ou par e-mail.\n'
-					      + 'Répondez directement à cet e-mail pour lui écrire.\n';
+					      + 'Action attendue : recontacter ce prospect par téléphone, par e-mail ou par SMS.\n';
 
 					    /* 2. Confirmation prospect */
 					    var contact = CONTACT_EMAIL;
@@ -2524,6 +2525,16 @@ a.no-theme-style {
 					      if (success) { success.hidden = false; }
 					      if (fill) { fill.style.width = '100%'; }
 					      if (stepLabel) { stepLabel.textContent = 'Demande envoyée'; }
+
+					      /* Le message de remerciement remplace le formulaire : on le ramène en haut de
+					         l'écran. Sur mobile, la page restait au milieu du formulaire et il fallait
+					         scroller à la main pour découvrir le message. */
+					      var successCard = root.closest ? root.closest('.hl-lf-card') : null;
+					      if (successCard && successCard.scrollIntoView) {
+					        try {
+					          successCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					        } catch (error) { /* défilement non animé / non pris en charge */ }
+					      }
 
 					      if (successEmail) {
 					        successEmail.textContent = '';

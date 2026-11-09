@@ -931,24 +931,23 @@ function hl_lf_build_messages(array $data, array $meta, array $form, array $conf
 
     $recapShort = !empty($data['besoins']) ? implode(', ', $data['besoins']) : 'non précisé';
     $internalIntro = sprintf(
-        'Nouvelle demande de lead : %s (%s) — %s leads/mois.',
+        'Nouvelle demande de leads : %s (%s) — %s leads/mois.',
         $data['societe'],
         $data['nom'],
         $data['volume']
     );
 
     $internalContent = $recapHtml
-        . '<div style="margin-top:20px;padding:14px 16px;background:#fff7f5;border:1px solid #f6d5ce;border-radius:10px;font-size:13.5px;line-height:1.55;color:#7a2a20;">'
-        . '<strong style="display:block;margin-bottom:6px;color:#a3352a;">Action attendue</strong>'
-        . 'Recontacter ce prospect par téléphone ou par e-mail. Répondez directement à cet e-mail pour lui écrire.'
+        . '<div style="margin-top:20px;padding:14px 16px;background:#f1f9f4;border:1px solid #bfe3cd;border-radius:10px;font-size:13.5px;line-height:1.55;color:#1d5c3a;">'
+        . '<strong style="display:block;margin-bottom:6px;color:#1e7a46;">Action attendue</strong>'
+        . 'Recontacter ce prospect par téléphone, par e-mail ou par SMS.'
         . '</div>';
 
-    $internalText = "NOUVELLE DEMANDE DE LEAD\n"
-        . "========================\n\n"
+    $internalText = "NOUVELLE DEMANDE DE LEADS\n"
+        . "=========================\n\n"
         . $recapText . "\n\n"
         . "Besoins : " . $recapShort . "\n"
-        . "Action attendue : recontacter ce prospect par téléphone ou par e-mail.\n"
-        . "Répondez directement à cet e-mail pour lui écrire.\n";
+        . "Action attendue : recontacter ce prospect par téléphone, par e-mail ou par SMS.\n";
 
     $footer = 'Demande reçue via ' . hl_lf_e($config['site_url']) . ' — '
         . hl_lf_e($meta['date_local']) . '<br>'
@@ -963,7 +962,7 @@ function hl_lf_build_messages(array $data, array $meta, array $form, array $conf
         'reply_to' => array('email' => $data['email'], 'name' => $data['nom']),
         'from'     => array('email' => $fromEmail, 'name' => $fromName),
         'subject'  => $internalSubject,
-        'html'     => hl_lf_wrap_html('Nouvelle demande de lead', $internalIntro, $internalContent, $footer),
+        'html'     => hl_lf_wrap_html('Nouvelle demande de leads', $internalIntro, $internalContent, $footer),
         'text'     => $internalText,
         'label'    => 'notification responsable',
     );

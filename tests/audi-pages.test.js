@@ -50,3 +50,39 @@ for (const [name, formPath] of Object.entries(pages)) {
     }
   });
 }
+
+// Pages B2B dont les mentions légales ont été revues (Q6, Q4, A5, A2) :
+// éditeur Hellodevis + liens vers nos propres mentions et notre politique de confidentialité.
+const legalPages = ['audi-a2', 'audi-a5', 'audi-q4', 'audi-q6'];
+
+for (const name of legalPages) {
+  test(`${name} : mentions légales Hellodevis et politique de confidentialité liées`, () => {
+    const html = fs.readFileSync(path.join(__dirname, '..', name, 'index.html'), 'utf8');
+    const virtualConsole = new VirtualConsole();
+    virtualConsole.on('jsdomError', () => {});
+    const dom = new JSDOM(html, { url: `https://www.hellodevis.fr/${name}/`, virtualConsole });
+    try {
+      const { document } = dom.window;
+      const mentions = [...document.querySelectorAll('a[href="/mentions-legales/"]')];
+      const policies = [...document.querySelectorAll('a[href="/politique-de-confidentialite-donnees-personnelles/"]')];
+      assert.equal(mentions.length, 1, 'un lien unique vers nos mentions légales');
+      assert.equal(policies.length, 2, 'politique de confidentialité liée dans le bloc éditeur et dans la phrase droits');
+
+      const publisher = mentions[0].closest('p').textContent;
+      assert.match(publisher, /Site édité par Hellodevis/);
+      assert.match(publisher, /B 798 043 634/);
+      assert.equal(mentions[0].textContent.trim(), 'Mentions légales');
+
+      const rightsP = [...document.querySelectorAll('p')]
+        .find(p => p.textContent.includes('Pour en savoir plus sur la gestion de vos données personnelles'));
+      assert.ok(rightsP, 'phrase sur les droits des personnes présente');
+      const rightsLink = rightsP.querySelector('a[href="/politique-de-confidentialite-donnees-personnelles/"]');
+      assert.ok(rightsLink, 'la phrase renvoie vers notre politique de confidentialité');
+      assert.equal(rightsLink.textContent.trim(), 'politique de confidentialité');
+
+      assert.ok(!html.includes('<br>.<br>'), 'plus de point orphelin avant le renvoi (1)');
+    } finally {
+      dom.window.close();
+    }
+  });
+}
